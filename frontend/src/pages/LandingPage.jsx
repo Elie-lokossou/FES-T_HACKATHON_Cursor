@@ -296,6 +296,9 @@ export default function LandingPage() {
             <Link className="btn btn--primary" to="/inscription">
               Créer mon profil
             </Link>
+            <Link className="btn btn--outline" to="/inscription?role=mentor">
+              Devenir mentor
+            </Link>
             <Link className="btn btn--outline" to="/connexion">
               J’ai déjà un compte
             </Link>

@@ -1,8 +1,10 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import AppShell from "./components/AppShell";
+import GuestOnlyRoute from "./components/GuestOnlyRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RoleRoute from "./components/RoleRoute";
+import ScrollToTop from "./components/ScrollToTop";
 import AdminParcoursPage from "./pages/AdminParcoursPage";
 import ConfidentialitePage from "./pages/ConfidentialitePage";
 import LandingPage from "./pages/LandingPage";
@@ -17,6 +19,8 @@ import ParcoursPage from "./pages/ParcoursPage";
 import RegisterPage from "./pages/RegisterPage";
 import RoleRedirectPage from "./pages/RoleRedirectPage";
 import TarifsPage from "./pages/TarifsPage";
+import FaqPage from "./pages/FaqPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 const ROLES_MENTEE = ["mentee", "admin"];
 const ROLES_MENTOR = ["mentor", "admin"];
@@ -27,14 +31,31 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* ——— Site public ——— */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/tarifs" element={<TarifsPage />} />
+          <Route path="/faq" element={<FaqPage />} />
           <Route path="/confidentialite" element={<ConfidentialitePage />} />
           <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
-          <Route path="/connexion" element={<LoginPage />} />
-          <Route path="/inscription" element={<RegisterPage />} />
+          <Route path="/mot-de-passe-oublie" element={<ForgotPasswordPage />} />
+          <Route
+            path="/connexion"
+            element={
+              <GuestOnlyRoute>
+                <LoginPage />
+              </GuestOnlyRoute>
+            }
+          />
+          <Route
+            path="/inscription"
+            element={
+              <GuestOnlyRoute>
+                <RegisterPage />
+              </GuestOnlyRoute>
+            }
+          />
 
           {/* ——— Application authentifiée ——— */}
           <Route

@@ -12,17 +12,21 @@ Cartographie du flux SPA (React Router). **Point d’entrée obligatoire** : la 
 | 2 | `/tarifs` | Tarifs & offres | Public | — |
 | 3 | `/confidentialite` | Politique de confidentialité | Public | — |
 | 4 | `/mentions-legales` | Mentions légales | Public | — |
-| 5 | `/connexion` | Connexion (JWT) | Public | — |
-| 6 | `/inscription` | Inscription mentee / mentor | Public | — |
-| 7 | `/app` | **Redirection intelligente** selon rôle | Auth | tous |
-| 8 | `/app/mentee` | Tableau de bord mentee | Auth | mentee, admin |
-| 9 | `/app/matching` | Matching (top 3 mentors) | Auth | mentee, admin |
-| 10 | `/app/messages` | Messagerie 1-to-1 | Auth | mentee, mentor, admin |
-| 11 | `/app/parcours` | Parcours guidés | Auth | mentee, mentor, admin |
-| 12 | `/app/mentor` | Inbox mentor | Auth | mentor, admin |
-| 13 | `/app/admin/parcours` | Création de parcours (back-office) | Auth | admin |
-| 14 | `/dashboard` | Alias → `/app` | Auth | — |
-| 15 | `*` | 404 | Public | — |
+| 5 | `/faq` | FAQ (accordéon) | Public | — |
+| 6 | `/mot-de-passe-oublie` | Mot de passe oublié (MVP / démo) | Public | — |
+| 7 | `/connexion` | Connexion (JWT) | Public* | — |
+| 8 | `/inscription` | Inscription mentee / mentor (`?role=mentor`) | Public* | — |
+| 9 | `/app` | **Redirection intelligente** selon rôle | Auth | tous |
+| 10 | `/app/mentee` | Tableau de bord mentee | Auth | mentee, admin |
+| 11 | `/app/matching` | Matching (top 3 mentors) | Auth | mentee, admin |
+| 12 | `/app/messages` | Messagerie 1-to-1 | Auth | mentee, mentor, admin |
+| 13 | `/app/parcours` | Parcours guidés | Auth | mentee, mentor, admin |
+| 14 | `/app/mentor` | Inbox mentor | Auth | mentor, admin |
+| 15 | `/app/admin/parcours` | Création de parcours (back-office) | Auth | admin |
+| 16 | `/dashboard` | Alias → `/app` | Auth | — |
+| 17 | `*` | 404 | Public | — |
+
+\* **GuestOnlyRoute** : si déjà connecté → redirection vers `/app`.
 
 ---
 
@@ -34,7 +38,9 @@ Cartographie du flux SPA (React Router). **Point d’entrée obligatoire** : la 
 2. CTA « Commencer » / « Inscription » → `/inscription`.
 3. « Connexion » (nav ou CTA) → `/connexion`.
 4. Tarifs → `/tarifs`.
-5. Liens pied de page → `/confidentialite`, `/mentions-legales`.
+5. FAQ → `/faq`.
+6. Liens pied de page → `/confidentialite`, `/mentions-legales`.
+7. **Devenir mentor** (landing) → `/inscription?role=mentor`.
 
 ### Après connexion
 
@@ -68,12 +74,22 @@ Cartographie du flux SPA (React Router). **Point d’entrée obligatoire** : la 
 
 - **`ProtectedRoute`** (`/app/*`) : sans token valide → `/connexion?next=…`.
 - **`RoleRoute`** : rôle non autorisé → `/app` (redirection sûre).
+- **`GuestOnlyRoute`** : `/connexion` et `/inscription` inaccessibles si session active.
 
 ---
 
-## 4. Fichiers clés
+## 4. API en développement (proxy)
 
-- `src/App.jsx` — définition des routes.
-- `src/components/AppShell.jsx` — layout + menu latéral (liens selon rôle).
+- `vite.config.js` proxy `/api` et `/health` → backend (par défaut `http://127.0.0.1:8000`).
+- Docker : variable `VITE_PROXY_API=http://backend:8000` (voir `docker-compose.yml`).
+- `src/config.js` : en dev, `API_BASE` vide = appels relatifs `/api/...` (évite CORS).
+
+---
+
+## 5. Fichiers clés
+
+- `src/App.jsx` — définition des routes + `ScrollToTop`.
+- `src/components/AppShell.jsx` — layout + menu latéral (liens selon rôle) + titre de page.
 - `src/pages/LandingPage.jsx` — landing professionnelle.
 - `src/context/AuthContext.jsx` — session JWT.
+- `vite.config.js` — proxy API.

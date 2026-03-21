@@ -8,6 +8,13 @@ Base applicative rapide (non HTML statique) inspiree de `mentorat-platform.html`
 - `frontend/` : App React + Vite + React Router — **landing professionnelle**, auth JWT, espaces par rôle (voir `frontend/NAVIGATION.md`)
 - `docker-compose.yml` : lancement rapide fullstack
 
+## Base de données
+
+- **Par défaut** : **SQLite** (`backend/mentorat.db`) — aucune install requise.
+- **PostgreSQL** : définir `DATABASE_URL` (voir `backend/.env.example`). Avec Docker : `docker compose up` lance Postgres + backend avec la bonne URL.
+
+Tables créées au **démarrage** (`CREATE TABLE` + données de démo si tables vides).
+
 ## Lancer le backend
 
 ```bash
@@ -29,6 +36,8 @@ npm run dev
 ```
 
 Frontend dispo sur: `http://localhost:5173`
+
+En **développement**, le proxy Vite envoie `/api` et `/health` vers le backend (`127.0.0.1:8000` par défaut). Les variables optionnelles sont dans `frontend/.env.example`. Avec Docker Compose, `VITE_PROXY_API=http://backend:8000` est déjà défini pour le service frontend.
 
 ## Endpoints utiles
 

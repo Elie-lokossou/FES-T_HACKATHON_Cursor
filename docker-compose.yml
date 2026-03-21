@@ -1,13 +1,31 @@
-version: "3.9"
-
 services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mentor
+      POSTGRES_PASSWORD: mentor
+      POSTGRES_DB: mentorat
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mentor -d mentorat"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   backend:
     build: ./backend
     ports:
       - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
-      - ALLOWED_ORIGIN=http://localhost:5173
-      - JWT_SECRET=demo-secret-change-me
+      ALLOWED_ORIGIN: http://localhost:5173
+      JWT_SECRET: demo-secret-change-me
+      DATABASE_URL: postgresql+psycopg2://mentor:mentor@postgres:5432/mentorat
 
   frontend:
     build: ./frontend
@@ -15,3 +33,8 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    environment:
+      VITE_PROXY_API: http://backend:8000
+
+volumes:
+  pgdata:

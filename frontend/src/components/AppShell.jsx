@@ -1,10 +1,20 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import { useAuth } from "../context/AuthContext";
 
+const ROUTE_TITLES = {
+  "/app": "Accueil",
+  "/app/mentee": "Espace mentee",
+  "/app/matching": "Matching intelligent",
+  "/app/messages": "Messagerie",
+  "/app/parcours": "Parcours guidés",
+  "/app/mentor": "Inbox mentor",
+  "/app/admin/parcours": "Administration — Parcours"
+};
+
 function navForRole(role) {
-  const base = [
-    { to: "/app", end: true, label: "Accueil", icon: "⌂" }
-  ];
+  const base = [{ to: "/app", end: true, label: "Accueil", icon: "⌂" }];
+
   if (role === "mentee" || role === "admin") {
     base.push(
       { to: "/app/mentee", label: "Espace mentee", icon: "◉" },
@@ -13,19 +23,33 @@ function navForRole(role) {
       { to: "/app/parcours", label: "Parcours", icon: "≡" }
     );
   }
-  if (role === "mentor" || role === "admin") {
-    base.push({ to: "/app/mentor", label: "Inbox mentor", icon: "☰" });
+
+  if (role === "mentor") {
+    base.push(
+      { to: "/app/messages", label: "Messages", icon: "✉" },
+      { to: "/app/parcours", label: "Parcours", icon: "≡" },
+      { to: "/app/mentor", label: "Inbox mentor", icon: "☰" }
+    );
   }
+
   if (role === "admin") {
+    base.push({ to: "/app/mentor", label: "Inbox mentor", icon: "☰" });
     base.push({ to: "/app/admin/parcours", label: "Admin parcours", icon: "⚙" });
   }
+
   return base;
 }
 
 export default function AppShell() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const items = navForRole(user?.role ?? "mentee");
+
+  const pageTitle = useMemo(
+    () => ROUTE_TITLES[pathname] || "Espace connecté",
+    [pathname]
+  );
 
   return (
     <div className="app-shell">
@@ -68,7 +92,7 @@ export default function AppShell() {
       </aside>
       <div className="app-shell__main">
         <header className="app-shell__topbar">
-          <h1 className="app-shell__title">Espace connecté</h1>
+          <h1 className="app-shell__title">{pageTitle}</h1>
         </header>
         <main className="app-shell__content">
           <Outlet />

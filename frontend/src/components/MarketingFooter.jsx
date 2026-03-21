@@ -22,6 +22,7 @@ export default function MarketingFooter() {
         <div>
           <h4>Ressources</h4>
           <a href="/#comment">Comment ça marche</a>
+          <Link to="/faq">FAQ</Link>
           <Link to="/tarifs">Tarifs</Link>
         </div>
         <div>

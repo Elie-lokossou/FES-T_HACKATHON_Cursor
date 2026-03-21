@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { API_BASE } from "../config";
 import { useAuth } from "../context/AuthContext";
 
 export default function RegisterPage() {
   const { loginWithToken } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("mentee");
+
+  useEffect(() => {
+    const r = searchParams.get("role");
+    if (r === "mentor" || r === "mentee") setRole(r);
+  }, [searchParams]);
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
 

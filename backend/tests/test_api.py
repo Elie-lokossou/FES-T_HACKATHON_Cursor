@@ -1,18 +1,22 @@
+import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app
 
 
-client = TestClient(app)
+@pytest.fixture
+def client():
+    with TestClient(app) as c:
+        yield c
 
 
-def test_health():
+def test_health(client):
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
 
 
-def test_auth_and_me():
+def test_auth_and_me(client):
     login = client.post(
         "/api/auth/login",
         json={"email": "mentee@mentor.bj", "password": "MenteePass123"},
@@ -25,7 +29,7 @@ def test_auth_and_me():
     assert me.json()["role"] in {"mentee", "mentor", "admin"}
 
 
-def test_match_top_three():
+def test_match_top_three(client):
     payload = {
         "full_name": "Awa Demo",
         "email": "awa@example.com",

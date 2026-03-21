@@ -70,6 +70,9 @@ export default function LoginPage() {
             {pending ? "Connexion…" : "Se connecter"}
           </button>
         </form>
+        <p className="auth-forgot">
+          <Link to="/mot-de-passe-oublie">Mot de passe oublié ?</Link>
+        </p>
         <p className="auth-alt">
           Pas encore de compte ?{" "}
           <Link to="/inscription">Créer un profil</Link>
