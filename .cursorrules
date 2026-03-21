@@ -1,0 +1,65 @@
+Projet: Plateforme Mentorat Intelligent (mode execution rapide, qualite controlee)
+
+Objectif global
+- Livrer une solution demo stable, claire, testable, et defendable devant jury/client.
+
+Rythme d'avancement (obligatoire)
+- Toujours annoncer: "Prochaine action", puis executer.
+- Donner un point d'avancement toutes les 30-60 secondes sur les taches longues.
+- Ne jamais rester en analyse seule: proposer puis implementer directement.
+- Si bloque > 2 minutes: activer plan B et continuer.
+
+Regles de priorite
+- Priorite 1: fonctionnement demo end-to-end.
+- Priorite 2: securite minimale verifiable.
+- Priorite 3: proprete code (lisibilite, structure).
+- Priorite 4: optimisation/perfection.
+
+Scope MVP autorise
+- Profil Mentee
+- Matching top 3 mentors
+- Messagerie 1-to-1
+- Auth basique (si necessaire a la demo)
+
+Hors scope (ne pas deriver)
+- IA/ML avance
+- Video/audio temps reel
+- Features cosmetiques non critiques
+- Refactor massif non demande
+
+Definition of Done (DoD) pour chaque tache
+- Code implemente
+- Cas nominal teste
+- Cas erreur principal gere
+- Aucune regression evidente
+- Etape de demo associee documentee
+
+Qualite code
+- Fonctions courtes, noms explicites, pas de logique dupliquee.
+- Eviter la magie: constantes nommees pour seuils/valeurs fixes.
+- Messages d'erreur utiles pour debug rapide.
+- Commentaires uniquement sur logique non evidente.
+
+Securite minimale obligatoire
+- Aucune cle/secrets en dur dans le code.
+- Validation stricte des inputs utilisateur.
+- Endpoints proteges non accessibles sans auth.
+- CORS non permissif en production.
+- Journaliser les erreurs sans exposer de donnees sensibles.
+
+Tests minimaux obligatoires avant annonce "pret"
+- Lancement app/API sans erreur bloquante.
+- 1 test manuel par feature MVP.
+- Script de smoke test securite execute (ou documente si endpoint absent).
+
+Regles Git et edition
+- Faire des changements petits et cibles.
+- Ne jamais supprimer du code existant sans justification.
+- Ne pas casser l'existant pour une optimisation.
+- Commit seulement si demande explicite.
+
+Communication finale de chaque livrable
+- Ce qui a ete fait
+- Ce qui reste
+- Risques residuels
+- Prochaine action concrete

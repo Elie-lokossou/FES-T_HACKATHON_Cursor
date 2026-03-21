@@ -1,0 +1,60 @@
+:root {
+  --sky: #5bb8f5;
+  --sky-mid: #3aa4ee;
+  --sky-dark: #1a7fc4;
+  --sky-deep: #0f5a8c;
+  --sky-pale: #eaf5fd;
+  --sky-light: #d0ebfb;
+  --white: #ffffff;
+  --off-white: #f7fbff;
+  --dark: #0d1f2d;
+  --text: #1e3445;
+  --muted: #5a7a8f;
+  --border: rgba(91, 184, 245, 0.18);
+  --border-dark: rgba(91, 184, 245, 0.35);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-pill: 50px;
+  --shadow-soft: 0 16px 40px rgba(91, 184, 245, 0.12);
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--white);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--sky-dark);
+}
+
+.muted {
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.mt-1 {
+  margin-top: 0.75rem;
+}
+.mt-2 {
+  margin-top: 1.5rem;
+}
+
+.link {
+  color: var(--sky-dark);
+  font-weight: 500;
+}

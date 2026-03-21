@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOWED_ORIGIN=http://localhost:5173
+      - JWT_SECRET=demo-secret-change-me
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
